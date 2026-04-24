@@ -67,8 +67,10 @@ static int do_esc_char(unsigned long c, unsigned short flags, char *do_quotes,
     unsigned char chtmp;
     char tmphex[HEX_SIZE(long) + 3];
 
+#if ULONG_MAX > 0xffffffffUL
     if (c > 0xffffffffL)
         return -1;
+#endif
     if (c > 0xffff) {
         BIO_snprintf(tmphex, sizeof(tmphex), "\\W%08lX", c);
         if (!io_ch(arg, tmphex, 10))
